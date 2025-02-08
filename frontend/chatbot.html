@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+<body>
+    <header>
+        <div class="logo">🤖 AI Chatbot</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Your Assignments</a></li>
+                <li><a href="chatbot.html">AI Chatbot</a></li>
+                <li><a href="notifications.html">Notifications</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="chat-container">
+        <div id="chatlogs"></div>
+        <div class="typing-indicator" id="typingIndicator"></div>
+    </section>
+
+    <div class="chat-input-container">
+        <input type="text" id="userInput" placeholder="Ask me anything..." onkeydown="handleEnter(event)">
+        <button class="send-btn" onclick="sendMessage()">Send</button>
+    </div>
+
+    <script src="chatbot.js"></script>
+</body>
+</html>
