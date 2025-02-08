@@ -7,38 +7,103 @@
     <link rel="stylesheet" href="chat.css">
 </head>
 <body>
-    <div class="chat-container">
-        <div class="chat-box" id="chat-box"></div>
-        <input type="text" id="user-input" placeholder="Type a message...">
+<div class="chat-container">
+    <div class="chat-box" id="chat-box"></div>
+    <div class="input-container">
+        <input type="text" id="user-input" placeholder="Type a message..." />
         <button onclick="sendMessage()">Send</button>
     </div>
-    <script>
-        function sendMessage() {
-            let inputField = document.getElementById("user-input");
-            let message = inputField.value;
-            inputField.value = "";
-            
-            if (message.trim() === "") return;
-            
-            let chatBox = document.getElementById("chat-box");
-            let userMessage = document.createElement("div");
-            userMessage.classList.add("user-message");
-            userMessage.textContent = message;
-            chatBox.appendChild(userMessage);
-            
-            fetch("/chat", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: message })
-            })
+</div>
+
+<script>
+    function sendMessage() {
+        let inputField = document.getElementById("user-input");
+        let message = inputField.value;
+        inputField.value = "";
+
+        if (message.trim() === "") return;
+
+        let chatBox = document.getElementById("chat-box");
+
+        // Display user's message
+        let userMessage = document.createElement("div");
+        userMessage.classList.add("user-message");
+        userMessage.textContent = message;
+        chatBox.appendChild(userMessage);
+
+        // Scroll to the bottom of the chat box
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Fetch bot response from server
+        fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: message })
+        })
             .then(response => response.json())
             .then(data => {
+                // Display bot's response
                 let botMessage = document.createElement("div");
                 botMessage.classList.add("bot-message");
                 botMessage.textContent = data.message || data.error;
                 chatBox.appendChild(botMessage);
+
+                // Scroll to the bottom of the chat box
+                chatBox.scrollTop = chatBox.scrollHeight;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                let botMessage = document.createElement("div");
+                botMessage.classList.add("bot-message");
+                botMessage.textContent = "Sorry, something went wrong!";
+                chatBox.appendChild(botMessage);
+                chatBox.scrollTop = chatBox.scrollHeight;
             });
+    }
+    document.getElementById("user-input").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();  // Prevents the default "Enter" behavior (new line)
+            sendMessage();  // Trigger the sendMessage function when Enter is pressed
         }
-    </script>
+    });
+
+    function sendMessage() {
+        let inputField = document.getElementById("user-input");
+        let message = inputField.value;
+        inputField.value = "";
+
+        if (message.trim() === "") return;
+
+        let chatBox = document.getElementById("chat-box");
+
+        // Display user's message
+        let userMessage = document.createElement("div");
+        userMessage.classList.add("user-message");
+        userMessage.textContent = message;
+        chatBox.appendChild(userMessage);
+
+        // Scroll to the bottom of the chat box
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Fetch bot response from server
+        fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: message })
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Display bot's response
+                let botMessage = document.createElement("div");
+                botMessage.classList.add("bot-message");
+                botMessage.textContent = data.message || data.error;
+                chatBox.appendChild(botMessage);
+
+                // Scroll to the bottom of the chat box
+                chatBox.scrollTop = chatBox.scrollHeight;
+            });
+    }
+
+</script>
 </body>
 </html>

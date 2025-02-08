@@ -7,12 +7,34 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Upload Your Files</h1>
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" id="file-input">
-            <button type="submit">Upload</button>
-        </form>
-    </div>
+<header>
+    <div class="logo">Upload Files</div>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="/notifications">Notifications</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container">
+    <h1>Upload Your Files</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data" class="upload-form">
+        <div class="form-group">
+            <label for="file">Select File:</label>
+            <input type="file" name="file" id="file" accept=".pdf,.doc,.docx" required>
+        </div>
+
+        <div class="form-group">
+            <label for="deadline">Select Deadline:</label>
+            <input type="date" name="deadline" id="deadline" required>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn-submit">Upload</button>
+        </div>
+    </form>
+</div>
 </body>
 </html>

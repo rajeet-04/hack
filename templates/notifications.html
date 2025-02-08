@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .notification {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        .notification-header {
+            font-weight: bold;
+        }
+        .notification-body {
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-5">Upcoming Deadlines</h2>
+    <div id="notification-container">
+        {% if deadlines %}
+            {% for deadline in deadlines %}
+                <div class="notification">
+                    <div class="notification-header">
+                        <strong>File:</strong> {{ deadline.filename }}
+                    </div>
+                    <div class="notification-body">
+                        <strong>Deadline:</strong> {{ deadline.deadline }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="notification">
+                No upcoming deadlines found.
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
