@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+        <input type="text" id="user-input" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <script>
+        function sendMessage() {
+            let inputField = document.getElementById("user-input");
+            let message = inputField.value;
+            inputField.value = "";
+            
+            if (message.trim() === "") return;
+            
+            let chatBox = document.getElementById("chat-box");
+            let userMessage = document.createElement("div");
+            userMessage.classList.add("user-message");
+            userMessage.textContent = message;
+            chatBox.appendChild(userMessage);
+            
+            fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                let botMessage = document.createElement("div");
+                botMessage.classList.add("bot-message");
+                botMessage.textContent = data.message || data.error;
+                chatBox.appendChild(botMessage);
+            });
+        }
+    </script>
+</body>
+</html>
